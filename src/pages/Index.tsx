@@ -1,13 +1,52 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import Hero from "@/components/Hero";
+import CardDeck from "@/components/CardDeck";
+import About from "@/components/About";
+import Contact from "@/components/Contact";
 
 const Index = () => {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
-    </div>
+    <main className="min-h-screen">
+      {/* SEO Meta - handled by document head */}
+      <Hero />
+      <CardDeck />
+      <About />
+      <Contact />
+      
+      {/* Footer */}
+      <footer className="bg-dark text-white py-12">
+        <div className="container mx-auto px-6">
+          <div className="grid md:grid-cols-4 gap-8">
+            <div className="md:col-span-2">
+              <h3 className="text-2xl font-bold mb-4 text-gradient">MAPS International WLL</h3>
+              <p className="text-white/80 leading-relaxed mb-4">
+                Mapping Possibilities. Building Impact.
+              </p>
+              <p className="text-white/60 text-sm">
+                © 2024 MAPS International WLL. All rights reserved.
+              </p>
+            </div>
+            
+            <div>
+              <h4 className="font-semibold mb-4">Quick Links</h4>
+              <ul className="space-y-2 text-white/80">
+                <li><a href="#card-deck" className="hover:text-white transition-colors">Our Projects</a></li>
+                <li><a href="#about" className="hover:text-white transition-colors">About Us</a></li>
+                <li><a href="#contact" className="hover:text-white transition-colors">Contact</a></li>
+              </ul>
+            </div>
+            
+            <div>
+              <h4 className="font-semibold mb-4">Connect</h4>
+              <ul className="space-y-2 text-white/80">
+                <li><a href="mailto:info@mapsinternational.qa" className="hover:text-white transition-colors">Email</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">LinkedIn</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Instagram</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </main>
   );
 };
 
