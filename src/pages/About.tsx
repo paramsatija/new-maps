@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Globe, Users, Award, Zap, Heart, Star, Trophy, Calendar, MapPin, Mail, Camera, Image } from "lucide-react";
 import FounderSection from "@/components/FounderSection";
+import ParticleSystem from "@/components/ParticleSystem";
 
 const About = () => {
   const leadRef = useRef<HTMLDivElement>(null);
@@ -8,6 +9,12 @@ const About = () => {
   const valuesRef = useRef<HTMLDivElement>(null);
   const teamRef = useRef<HTMLDivElement>(null);
   const [scrollY, setScrollY] = useState(0);
+
+  const [animatedNumbers, setAnimatedNumbers] = useState({
+    years: 0,
+    countries: 0,
+    people: 0
+  });
 
   // What We Do - Services
   const services = [
@@ -70,6 +77,32 @@ const About = () => {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Animated numbers for hero stats
+  useEffect(() => {
+    const targets = { years: 11, countries: 70, people: 5000 };
+    const duration = 2000;
+    const steps = 60;
+    const stepDuration = duration / steps;
+
+    const animateNumber = (key: keyof typeof targets, target: number) => {
+      let current = 0;
+      const increment = target / steps;
+      
+      const timer = setInterval(() => {
+        current += increment;
+        if (current >= target) {
+          current = target;
+          clearInterval(timer);
+        }
+        setAnimatedNumbers(prev => ({ ...prev, [key]: Math.floor(current) }));
+      }, stepDuration);
+    };
+
+    setTimeout(() => animateNumber('years', targets.years), 300);
+    setTimeout(() => animateNumber('countries', targets.countries), 500);
+    setTimeout(() => animateNumber('people', targets.people), 700);
   }, []);
 
   // Intersection Observer for animations
@@ -141,28 +174,120 @@ const About = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 text-white relative overflow-hidden">
+      {/* Enhanced Background Effects */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute inset-0 opacity-15">
+          <img
+            src="/src/assets/Rashmi-founder/rashmi-agarwal-professional.jpg"
+            alt="Rashmi Agarwal Background"
+            className="w-full h-full object-cover"
+            style={{ filter: 'blur(4px)' }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-br from-black/90 via-gray-900/70 to-black/95" />
+        </div>
+        
+        {/* Animated Glow Effects */}
+        <div className="absolute top-1/4 left-1/4 w-80 h-80 bg-magenta/25 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute top-3/4 right-1/4 w-96 h-96 bg-teal/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1.5s' }}></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-cta/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '3s' }}></div>
+      </div>
+
+      {/* Particle System */}
+      <ParticleSystem 
+        particleCount={25} 
+        colors={['#e91e63', '#00bcd4', '#ff9800', '#4caf50']}
+        mouseInteraction={true}
+      />
+
       {/* Hero Section with Scroll-Responsive Sizing */}
-      <section className="py-32 relative z-10 min-h-screen flex items-center" ref={leadRef}>
+      <section className="min-h-screen flex items-center justify-center py-20 relative z-10" ref={leadRef}>
         <div className="container mx-auto px-6 w-full">
-          <div className="text-center">
+          <div className="text-center max-w-6xl mx-auto">
             <h1 
-              className="font-bold mb-8 text-shimmer transition-all duration-500"
+              className="font-bold mb-8 text-shimmer transition-all duration-500 leading-none"
               style={{
-                fontSize: Math.max(60, 120 - scrollY * 0.3) + 'px',
+                fontSize: Math.max(60, 140 - scrollY * 0.2) + 'px',
                 lineHeight: 1.1
               }}
             >
               MAPS International WLL
             </h1>
+            
+            <div className="mb-8">
+              <h2 className="text-2xl md:text-4xl font-semibold text-magenta mb-6">
+                Where Cultures Converge
+              </h2>
+            </div>
+            
             <p 
-              className="text-white/90 leading-relaxed max-w-5xl mx-auto transition-all duration-500"
+              className="text-white/90 leading-relaxed max-w-4xl mx-auto transition-all duration-500 mb-12"
               style={{
-                fontSize: Math.max(18, 32 - scrollY * 0.1) + 'px'
+                fontSize: Math.max(18, 28 - scrollY * 0.05) + 'px'
               }}
             >
               We are a cultural & creative enterprise specializing in transformative experiences. From moments to movements, our work breaks through cultural barriers connecting communities across 70+ countries. We conjure cultural magic for the world's most meaningful initiatives.
             </p>
+            
+            {/* Hero Stats */}
+            <div className="flex justify-center gap-12 mb-16">
+              <div className="text-center">
+                <div className="text-4xl md:text-5xl font-bold text-white mb-2 text-glow">
+                  {animatedNumbers.years}+
+                </div>
+                <div className="text-white/70 text-sm font-medium">Years Impact</div>
+              </div>
+              <div className="text-center">
+                <div className="text-4xl md:text-5xl font-bold text-white mb-2 text-glow">
+                  {animatedNumbers.countries}+
+                </div>
+                <div className="text-white/70 text-sm font-medium">Countries</div>
+              </div>
+              <div className="text-center">
+                <div className="text-4xl md:text-5xl font-bold text-white mb-2 text-glow">
+                  {animatedNumbers.people}K+
+                </div>
+                <div className="text-white/70 text-sm font-medium">Lives Touched</div>
+              </div>
+            </div>
+
+            {/* Glassmorphism Mission Card */}
+            <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl p-8 max-w-3xl mx-auto shadow-2xl">
+              <div className="flex items-center gap-3 mb-4 justify-center">
+                <Award className="w-6 h-6 text-magenta" />
+                <h3 className="text-xl font-semibold text-white">Our Mission</h3>
+              </div>
+              <p className="text-white/90 text-lg leading-relaxed mb-6">
+                Transforming the global cultural landscape through innovative art programs, youth empowerment initiatives, and strategic partnerships that create lasting social impact.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <button 
+                  onClick={() => {
+                    const founderSection = document.querySelector('#founder-section') || document.querySelector('.founder-section');
+                    founderSection?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  className="bg-gradient-to-r from-magenta to-teal text-white px-8 py-4 rounded-xl font-semibold hover:shadow-lg hover:shadow-magenta/25 transition-all duration-300 hover:scale-105"
+                >
+                  Meet Our Founder
+                </button>
+                <button 
+                  onClick={() => {
+                    const servicesSection = servicesRef.current;
+                    servicesSection?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  className="border-2 border-white/30 text-white px-8 py-4 rounded-xl font-semibold hover:bg-white/10 transition-all duration-300 hover:scale-105"
+                >
+                  What We Do
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Scroll Indicator */}
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-float">
+          <div className="w-6 h-10 border-2 border-white/30 rounded-full flex flex-col items-center justify-start pt-2">
+            <div className="w-1 h-3 bg-white/60 rounded-full animate-pulse" />
           </div>
         </div>
       </section>
