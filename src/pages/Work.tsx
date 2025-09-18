@@ -59,6 +59,7 @@ const Work = () => {
   }));
 
   return (
+    <>
     <div className="min-h-screen relative overflow-hidden">
           <img
             src={qiafCardImage}
@@ -193,6 +194,7 @@ const Work = () => {
         </div>
       </section>
     </div>
+    </>
   );
 };
 
