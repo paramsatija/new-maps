@@ -174,7 +174,7 @@ const About = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 text-white relative overflow-hidden">
+    <div className="min-h-screen text-white relative overflow-hidden">
       {/* Enhanced Background Effects */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute inset-0 opacity-15">
@@ -184,13 +184,7 @@ const About = () => {
             className="w-full h-full object-cover"
             style={{ filter: 'blur(4px)' }}
           />
-          <div className="absolute inset-0 bg-gradient-to-br from-black/90 via-gray-900/70 to-black/95" />
         </div>
-        
-        {/* Animated Glow Effects */}
-        <div className="absolute top-1/4 left-1/4 w-80 h-80 bg-magenta/25 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute top-3/4 right-1/4 w-96 h-96 bg-teal/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1.5s' }}></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-cta/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '3s' }}></div>
       </div>
 
       {/* Particle System */}
@@ -201,19 +195,14 @@ const About = () => {
       />
 
       {/* Hero Section with Scroll-Responsive Sizing */}
-      <section className="min-h-screen flex items-center justify-center py-20 relative z-10" ref={leadRef}>
+      <section className="h-[50vh] bg-cta flex items-center justify-center py-20 relative z-10" ref={leadRef}>
         <div className="container mx-auto px-6 w-full">
           <div className="text-center max-w-6xl mx-auto">
             <h1 
-              className="font-bold mb-8 text-shimmer transition-all duration-500 leading-none"
-              style={{
-                fontSize: Math.max(60, 140 - scrollY * 0.2) + 'px',
-                lineHeight: 1.1
-              }}
+              className="font-bold mb-8 text-shimmer leading-none text-5xl"
             >
               MAPS International WLL
             </h1>
-            
             <div className="mb-8">
               <h2 className="text-2xl md:text-4xl font-semibold text-magenta mb-6">
                 Where Cultures Converge
@@ -221,10 +210,7 @@ const About = () => {
             </div>
             
             <p 
-              className="text-white/90 leading-relaxed max-w-4xl mx-auto transition-all duration-500 mb-12"
-              style={{
-                fontSize: Math.max(18, 28 - scrollY * 0.05) + 'px'
-              }}
+              className="text-white/90 leading-relaxed max-w-4xl mx-auto mb-12 text-xl"
             >
               We are a cultural & creative enterprise specializing in transformative experiences. From moments to movements, our work breaks through cultural barriers connecting communities across 70+ countries. We conjure cultural magic for the world's most meaningful initiatives.
             </p>

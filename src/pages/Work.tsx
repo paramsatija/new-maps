@@ -58,10 +58,7 @@ const Work = () => {
   }));
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 relative overflow-hidden">
-      {/* Dynamic Background with Hero Image */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute inset-0 opacity-20">
+    <div className="min-h-screen relative overflow-hidden">
           <img
             src="/src/assets/projects/qiaf-2025/qiaf-card.jpg"
             alt="QIAF Background"
@@ -69,18 +66,10 @@ const Work = () => {
             style={{ filter: 'blur(3px)' }}
           />
           <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-gray-900/60 to-black/90" />
-        </div>
-        
-        {/* Animated Background Glow Effects */}
-        {/* Magenta Glow */}
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-magenta/30 rounded-full blur-3xl animate-pulse"></div>
-        {/* Teal Glow */}
-        <div className="absolute top-3/4 right-1/4 w-80 h-80 bg-teal/30 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
-        {/* CTA Glow */}
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-cta/25 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
-        {/* Moving Glow Orbs */}
-        <div className="absolute top-1/3 right-1/3 w-32 h-32 bg-magenta/30 rounded-full blur-2xl animate-float-gentle"></div>
-        <div className="absolute bottom-1/3 left-1/3 w-40 h-40 bg-teal/25 rounded-full blur-2xl animate-float-gentle" style={{ animationDelay: '1.5s' }}></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-gray-900/60 to-black/90" />
+      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-magenta/30 rounded-full blur-3xl animate-pulse"></div>
+      <div className="absolute top-3/4 right-1/4 w-80 h-80 bg-teal/30 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-cta/25 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
       </div>
 
       {/* Enhanced Particle System Background */}
@@ -91,23 +80,16 @@ const Work = () => {
       />
 
       {/* Enhanced Hero Section */}
-      <section className="min-h-screen flex items-center justify-center py-20 relative z-10">
+      <section className="h-[50vh] bg-teal flex items-center justify-center py-20 relative z-10">
         <div className="container mx-auto px-6">
           <div className="max-w-6xl mx-auto text-center">
             <h1 
-              className="font-bold text-white mb-8 text-shimmer transition-all duration-500"
-              style={{
-                fontSize: Math.max(60, 120 - scrollY * 0.1) + 'px',
-                lineHeight: 1.1
-              }}
+              className="font-bold text-white mb-8 text-shimmer text-5xl"
             >
               Our Work
             </h1>
             <p 
-              className="text-white/90 leading-relaxed mb-12 max-w-4xl mx-auto transition-all duration-500"
-              style={{
-                fontSize: Math.max(18, 32 - scrollY * 0.05) + 'px'
-              }}
+              className="text-white/90 leading-relaxed mb-12 max-w-4xl mx-auto text-xl"
             >
               From cultural diplomacy to youth empowerment — discover the projects that have transformed Qatar's cultural landscape and connected communities across 70+ countries.
             </p>

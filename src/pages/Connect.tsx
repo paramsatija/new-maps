@@ -132,23 +132,7 @@ const Connect = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 relative overflow-hidden">
-      {/* Enhanced Background Effects */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute inset-0 opacity-20">
-          <div className="absolute inset-0 bg-gradient-to-br from-magenta/10 via-teal/5 to-cta/10 animate-pulse" style={{ animationDuration: '8s' }}></div>
-          <div className="absolute inset-0 bg-gradient-to-tl from-black/70 via-gray-900/50 to-black/80" />
-        </div>
-        
-        {/* Dynamic Glow Effects */}
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-magenta/30 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute top-3/4 right-1/4 w-80 h-80 bg-teal/25 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-72 h-72 bg-cta/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '4s' }}></div>
-        
-        {/* Moving Orbs */}
-        <div className="absolute top-1/3 right-1/3 w-24 h-24 bg-magenta/40 rounded-full blur-xl animate-float-gentle"></div>
-        <div className="absolute bottom-1/3 left-1/3 w-32 h-32 bg-teal/30 rounded-full blur-xl animate-float-gentle" style={{ animationDelay: '1.5s' }}></div>
-      </div>
+    <div className="min-h-screen relative overflow-hidden">
 
       {/* Particle System Background */}
       <ParticleSystem 
@@ -158,19 +142,14 @@ const Connect = () => {
       />
       
       {/* Enhanced Hero Section */}
-      <section className="min-h-screen flex items-center justify-center py-20 relative overflow-hidden z-10">
+      <section className="h-[50vh] bg-dark flex items-center justify-center py-20 relative overflow-hidden z-10">
         <div className="container mx-auto px-6">
           <div className="max-w-6xl mx-auto text-center">
             <h1 
-              className="font-bold text-white mb-8 text-shimmer transition-all duration-500 leading-none"
-              style={{
-                fontSize: Math.max(60, 130 - scrollY * 0.15) + 'px',
-                lineHeight: 1.1
-              }}
+              className="font-bold text-white mb-8 text-shimmer leading-none text-5xl"
             >
               Connect
             </h1>
-            
             <div className="mb-8">
               <h2 className="text-2xl md:text-4xl font-semibold text-teal mb-6">
                 Let's Build Something Extraordinary
@@ -178,10 +157,7 @@ const Connect = () => {
             </div>
             
             <p 
-              className="text-white/90 leading-relaxed max-w-4xl mx-auto transition-all duration-500 mb-12 text-morphing"
-              style={{
-                fontSize: Math.max(18, 28 - scrollY * 0.05) + 'px'
-              }}
+              className="text-white/90 leading-relaxed max-w-4xl mx-auto mb-12 text-xl"
             >
               Join our mission to connect cultures, empower youth, and create lasting impact across 70+ countries.
             </p>
