@@ -4,6 +4,7 @@ import CardShuffleGrid from "@/components/CardShuffleGrid";
 import Gallery3D from "@/components/Gallery3D";
 import ParticleSystem from "@/components/ParticleSystem";
 import { useState, useEffect } from "react";
+import qiafCardImage from "@/assets/projects/qiaf-2025/qiaf-card.jpg";
 
 const Work = () => {
   const navigate = useNavigate();
@@ -60,7 +61,7 @@ const Work = () => {
   return (
     <div className="min-h-screen relative overflow-hidden">
           <img
-            src="/src/assets/projects/qiaf-2025/qiaf-card.jpg"
+            src={qiafCardImage}
             alt="QIAF Background"
             className="w-full h-full object-cover"
             style={{ filter: 'blur(3px)' }}
