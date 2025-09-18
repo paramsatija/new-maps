@@ -1,7 +1,5 @@
 import Hero from "@/components/Hero";
 import CardDeck from "@/components/CardDeck";
-import About from "@/components/About";
-import Contact from "@/components/Contact";
 
 const Index = () => {
   return (
@@ -9,8 +7,6 @@ const Index = () => {
       {/* SEO Meta - handled by document head */}
       <Hero />
       <CardDeck />
-      <About />
-      <Contact />
       
       {/* Footer */}
       <footer className="bg-dark text-white py-12">
@@ -29,9 +25,9 @@ const Index = () => {
             <div>
               <h4 className="font-semibold mb-4">Quick Links</h4>
               <ul className="space-y-2 text-white/80">
-                <li><a href="#card-deck" className="hover:text-white transition-colors">Our Projects</a></li>
-                <li><a href="#about" className="hover:text-white transition-colors">About Us</a></li>
-                <li><a href="#contact" className="hover:text-white transition-colors">Contact</a></li>
+                <li><a href="/work" className="hover:text-white transition-colors">Our Work</a></li>
+                <li><a href="/about" className="hover:text-white transition-colors">About Us</a></li>
+                <li><a href="/connect" className="hover:text-white transition-colors">Connect</a></li>
               </ul>
             </div>
             

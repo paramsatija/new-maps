@@ -1,0 +1,8 @@
+<svg width="400" height="500" viewBox="0 0 400 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Placeholder for Ambassador Image -->
+  <rect width="400" height="500" fill="#f3f4f6"/>
+  <circle cx="200" cy="200" r="80" fill="#d1d5db"/>
+  <path d="M160 180c0-22 18-40 40-40s40 18 40 40c0 22-18 40-40 40s-40-18-40-40z" fill="#9ca3af"/>
+  <path d="M120 320c0-44 36-80 80-80s80 36 80 80v80H120v-80z" fill="#9ca3af"/>
+  <text x="200" y="450" font-family="Arial, sans-serif" font-size="16" text-anchor="middle" fill="#6b7280">Ambassador Photo</text>
+</svg>

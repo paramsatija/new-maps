@@ -1,65 +1,12 @@
 import { useState } from "react";
-import { ChevronLeft, ChevronRight, Users, Trophy, Star, Globe } from "lucide-react";
-import heroQiaf from "@/assets/hero-qiaf-festival.jpg";
-import heroYouth from "@/assets/hero-youth-platform.jpg";
-import heroSpace from "@/assets/hero-space-science.jpg";
-
-interface Event {
-  id: string;
-  title: string;
-  year: number;
-  description: string;
-  stats: {
-    editions?: number;
-    artists?: number;
-    countries?: number;
-    engagements?: number;
-    youth_engaged?: number;
-    focus_areas?: number;
-    students?: number;
-    agencies?: number;
-  };
-  heroImage: string;
-  category: string;
-  icon: React.ReactNode;
-}
-
-const events: Event[] = [
-  {
-    id: "qiaf-2025",
-    title: "QIAF — Qatar International Art Festival",
-    year: 2025,
-    description: "International art festivals, artist residencies, curated exhibitions connecting 400+ artists from 70+ countries.",
-    stats: { editions: 7, artists: 400, countries: 70, engagements: 54603 },
-    heroImage: heroQiaf,
-    category: "Arts & Culture",
-    icon: <Globe className="w-6 h-6" />
-  },
-  {
-    id: "youth-platform",
-    title: "The YOUTH Platform",
-    year: 2025,
-    description: "The YOUTH platform, hackathons, bootcamps, leadership programs empowering 500+ young innovators across 8 focus areas.",
-    stats: { focus_areas: 8, youth_engaged: 500 },
-    heroImage: heroYouth,
-    category: "Youth & Innovation",
-    icon: <Users className="w-6 h-6" />
-  },
-  {
-    id: "kssp",
-    title: "Katara Space Science Program",
-    year: 2025,
-    description: "6 editions • NASA, ISRO, Canadian Space Agency partnerships • 300+ students inspired",
-    stats: { editions: 6, students: 300, agencies: 4 },
-    heroImage: heroSpace,
-    category: "Education & STEM",
-    icon: <Star className="w-6 h-6" />
-  }
-];
+import { useNavigate } from "react-router-dom";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { getFeaturedProjects, renderIcon } from "@/data/projects";
 
 const CardDeck = () => {
   const [currentCard, setCurrentCard] = useState(0);
-  const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
+  const navigate = useNavigate();
+  const events = getFeaturedProjects();
 
   const nextCard = () => {
     setCurrentCard((prev) => (prev + 1) % events.length);
@@ -69,12 +16,8 @@ const CardDeck = () => {
     setCurrentCard((prev) => (prev - 1 + events.length) % events.length);
   };
 
-  const openModal = (event: Event) => {
-    setSelectedEvent(event);
-  };
-
-  const closeModal = () => {
-    setSelectedEvent(null);
+  const openProject = (projectId: string) => {
+    navigate(`/projects/${projectId}`);
   };
 
   return (
@@ -94,48 +37,69 @@ const CardDeck = () => {
             <div className="flex items-center justify-center space-x-8">
               {/* Previous Card Preview */}
               <div className="opacity-50 scale-75 transition-all duration-500">
-                <div className="w-80 h-96 rounded-2xl overflow-hidden shadow-card">
-                  <img
-                    src={events[(currentCard - 1 + events.length) % events.length].heroImage}
-                    alt={events[(currentCard - 1 + events.length) % events.length].title}
-                    className="w-full h-full object-cover"
-                  />
+                <div className="w-80 rounded-2xl overflow-hidden shadow-card bg-white flex flex-col">
+                  <div className="flex-1 min-h-[200px]">
+                    <img
+                      src={events[(currentCard - 1 + events.length) % events.length].heroImage}
+                      alt={events[(currentCard - 1 + events.length) % events.length].title}
+                      className="w-full h-full object-contain object-center"
+                    />
+                  </div>
+                  <div className="bg-white/10 backdrop-blur-md border-t border-white/20 p-4">
+                    <h4 className="text-dark text-sm font-bold truncate">
+                      {events[(currentCard - 1 + events.length) % events.length].title}
+                    </h4>
+                  </div>
                 </div>
               </div>
 
               {/* Current Card */}
               <div className="scale-100 transition-all duration-500 animate-scale-in">
                 <div 
-                  className="card-event w-96 h-[500px] relative overflow-hidden group"
-                  onClick={() => openModal(events[currentCard])}
+                  className="card-event w-96 relative overflow-hidden group cursor-pointer rounded-3xl bg-white shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 flex flex-col"
+                  onClick={() => openProject(events[currentCard].id)}
                 >
-                  <div className="absolute inset-0">
+                  {/* Image Section */}
+                  <div className="relative flex-1 min-h-[300px] max-h-[400px]">
                     <img
                       src={events[currentCard].heroImage}
                       alt={events[currentCard].title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                      className="w-full h-full object-contain object-center group-hover:scale-105 transition-transform duration-700"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                   </div>
                   
-                  <div className="relative z-10 p-8 h-full flex flex-col justify-end">
-                    <div className="flex items-center gap-2 mb-4">
-                      <div className="text-white">{events[currentCard].icon}</div>
-                      <span className="text-white/80 text-sm font-medium">{events[currentCard].category}</span>
+                  {/* Glassmorphism Content Section */}
+                  <div className="bg-white/10 backdrop-blur-md border-t border-white/20 p-6">
+                    <div className="flex items-center gap-2 mb-3">
+                      <div className="text-dark/90">{renderIcon(events[currentCard].iconType)}</div>
+                      <span className="text-dark/80 text-sm font-medium bg-white/60 backdrop-blur-sm px-3 py-1 rounded-full">
+                        {events[currentCard].category}
+                      </span>
                     </div>
                     
-                    <h3 className="text-white mb-4 leading-tight">{events[currentCard].title}</h3>
-                    <p className="text-white/90 text-base leading-relaxed mb-6">
+                    <h3 className="text-dark text-lg font-bold mb-2 leading-tight group-hover:text-dark/90 transition-colors">
+                      {events[currentCard].title}
+                    </h3>
+                    <p className="text-dark/80 text-sm leading-relaxed mb-4 line-clamp-2">
                       {events[currentCard].description}
                     </p>
                     
-                    <div className="flex gap-4 text-white">
+                    <div className="flex gap-4 text-dark mb-4">
                       {Object.entries(events[currentCard].stats).map(([key, value]) => (
                         <div key={key} className="text-center">
-                          <div className="text-xl font-bold">{value}+</div>
-                          <div className="text-xs text-white/70 capitalize">{key.replace('_', ' ')}</div>
+                          <div className="text-sm font-bold">{value}+</div>
+                          <div className="text-xs text-dark/70 capitalize">{key.replace('_', ' ')}</div>
                         </div>
                       ))}
+                    </div>
+
+                    <div className="flex items-center justify-between">
+                      <span className="text-dark/70 text-sm font-medium">View Project</span>
+                      <div className="w-8 h-8 bg-dark/10 backdrop-blur-sm rounded-full flex items-center justify-center group-hover:bg-dark/20 transition-colors duration-300">
+                        <svg className="w-4 h-4 text-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -143,12 +107,19 @@ const CardDeck = () => {
 
               {/* Next Card Preview */}
               <div className="opacity-50 scale-75 transition-all duration-500">
-                <div className="w-80 h-96 rounded-2xl overflow-hidden shadow-card">
-                  <img
-                    src={events[(currentCard + 1) % events.length].heroImage}
-                    alt={events[(currentCard + 1) % events.length].title}
-                    className="w-full h-full object-cover"
-                  />
+                <div className="w-80 rounded-2xl overflow-hidden shadow-card bg-white flex flex-col">
+                  <div className="flex-1 min-h-[200px]">
+                    <img
+                      src={events[(currentCard + 1) % events.length].heroImage}
+                      alt={events[(currentCard + 1) % events.length].title}
+                      className="w-full h-full object-contain object-center"
+                    />
+                  </div>
+                  <div className="bg-white/10 backdrop-blur-md border-t border-white/20 p-4">
+                    <h4 className="text-dark text-sm font-bold truncate">
+                      {events[(currentCard + 1) % events.length].title}
+                    </h4>
+                  </div>
                 </div>
               </div>
             </div>
@@ -175,36 +146,46 @@ const CardDeck = () => {
             {events.map((event, index) => (
               <div
                 key={event.id}
-                className="card-event relative overflow-hidden"
-                onClick={() => openModal(event)}
+                className="card-event relative overflow-hidden cursor-pointer rounded-3xl bg-white shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 flex flex-col"
+                onClick={() => openProject(event.id)}
               >
-                <div className="aspect-video relative">
+                <div className="relative flex-1 min-h-[250px] max-h-[350px]">
                   <img
                     src={event.heroImage}
                     alt={event.title}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-contain object-center"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                 </div>
                 
-                <div className="p-6">
+                <div className="bg-white/10 backdrop-blur-md border-t border-white/20 p-6">
                   <div className="flex items-center gap-2 mb-3">
-                    <div className="text-dark">{event.icon}</div>
-                    <span className="text-muted-foreground text-sm font-medium">{event.category}</span>
+                    <div className="text-dark/90">{renderIcon(event.iconType)}</div>
+                    <span className="text-dark/80 text-sm font-medium bg-white/60 backdrop-blur-sm px-3 py-1 rounded-full">
+                      {event.category}
+                    </span>
                   </div>
                   
-                  <h3 className="text-dark mb-3">{event.title}</h3>
-                  <p className="text-muted-foreground leading-relaxed mb-4">
+                  <h3 className="text-dark text-lg font-bold mb-2 leading-tight">{event.title}</h3>
+                  <p className="text-dark/80 text-sm leading-relaxed mb-4 line-clamp-2">
                     {event.description}
                   </p>
                   
-                  <div className="flex gap-4 text-dark">
+                  <div className="flex gap-4 text-dark mb-4">
                     {Object.entries(event.stats).slice(0, 3).map(([key, value]) => (
                       <div key={key} className="text-center">
-                        <div className="text-lg font-bold">{value}+</div>
-                        <div className="text-xs text-muted-foreground capitalize">{key.replace('_', ' ')}</div>
+                        <div className="text-sm font-bold">{value}+</div>
+                        <div className="text-xs text-dark/70 capitalize">{key.replace('_', ' ')}</div>
                       </div>
                     ))}
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <span className="text-dark/70 text-sm font-medium">View Project</span>
+                    <div className="w-8 h-8 bg-dark/10 backdrop-blur-sm rounded-full flex items-center justify-center">
+                      <svg className="w-4 h-4 text-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -213,55 +194,6 @@ const CardDeck = () => {
         </div>
       </section>
 
-      {/* Modal */}
-      {selectedEvent && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto animate-scale-in">
-            <div className="relative">
-              <img
-                src={selectedEvent.heroImage}
-                alt={selectedEvent.title}
-                className="w-full h-64 object-cover"
-              />
-              <button
-                onClick={closeModal}
-                className="absolute top-4 right-4 bg-black/50 text-white rounded-full p-2 hover:bg-black/70 transition-colors"
-                aria-label="Close modal"
-              >
-                ×
-              </button>
-            </div>
-            
-            <div className="p-8">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="text-dark">{selectedEvent.icon}</div>
-                <span className="text-muted-foreground font-medium">{selectedEvent.category}</span>
-              </div>
-              
-              <h2 className="text-dark mb-4">{selectedEvent.title}</h2>
-              <p className="text-muted-foreground text-lg leading-relaxed mb-8">
-                {selectedEvent.description}
-              </p>
-              
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
-                {Object.entries(selectedEvent.stats).map(([key, value]) => (
-                  <div key={key} className="text-center p-4 bg-light rounded-xl">
-                    <div className="text-2xl font-bold text-dark mb-1">{value}+</div>
-                    <div className="text-sm text-muted-foreground capitalize">{key.replace('_', ' ')}</div>
-                  </div>
-                ))}
-              </div>
-              
-              <div className="flex gap-4">
-                <button className="btn-hero">Learn More</button>
-                <button className="px-6 py-3 border border-dark text-dark rounded-xl hover:bg-dark hover:text-white transition-colors">
-                  Partner With Us
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </>
   );
 };
