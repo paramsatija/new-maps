@@ -631,3 +631,72 @@
     opacity: 0.8;
   }
 }
+
+/* Enhanced focus states */
+.focus-ring {
+  @apply focus:outline-none focus:ring-2 focus:ring-magenta focus:ring-offset-2;
+}
+
+/* Hero Section Animations */
+@keyframes heroFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(40px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes heroSlideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(60px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes heroZoom {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.hero-fade-in {
+  animation: heroFadeIn 1s ease-out forwards;
+}
+
+.hero-slide-up {
+  animation: heroSlideUp 0.8s ease-out forwards;
+}
+
+.hero-zoom {
+  animation: heroZoom 0.6s ease-out forwards;
+}
+
+/* Dynamic Glow Pulse */
+@keyframes dynamicGlow {
+  0%, 100% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(1.1);
+  }
+}
+
+.dynamic-glow {
+  animation: dynamicGlow 4s ease-in-out infinite;
+}
+
+/* MAPS International Design System - Apple-grade typography and cinematic colors */
