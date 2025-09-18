@@ -25,7 +25,7 @@ const Navigation = () => {
   };
 
   // Check if we're on a dark background page for white text
-  const isDarkPage = location.pathname === "/about" || location.pathname.startsWith("/projects/") || location.pathname === "/" || location.pathname === "/connect";
+  const isDarkPage = location.pathname === "/about" || location.pathname.startsWith("/projects/") || location.pathname === "/" || location.pathname === "/connect" || location.pathname === "/work";
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-transparent backdrop-blur-none border-b border-transparent transition-all duration-300">

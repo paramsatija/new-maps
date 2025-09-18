@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Mail, Phone, MapPin, Send, Star, Award, Users, Calendar, Globe, Building, FileText, Heart } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useMagnetic, use3DTilt, useScrollReveal, useRipple } from "@/hooks/useAdvancedAnimations";
@@ -7,6 +7,13 @@ import ParticleSystem from "@/components/ParticleSystem";
 
 const Connect = () => {
   const [activeForm, setActiveForm] = useState<string | null>(null);
+  const [scrollY, setScrollY] = useState(0);
+  const [animatedStats, setAnimatedStats] = useState({
+    partnerships: 0,
+    responses: 0,
+    satisfaction: 0
+  });
+
   const [formData, setFormData] = useState({
     name: "",
     organization: "",
@@ -15,6 +22,37 @@ const Connect = () => {
     timeline: ""
   });
   const { toast } = useToast();
+
+  useEffect(() => {
+    const handleScroll = () => setScrollY(window.scrollY);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const targets = { partnerships: 150, responses: 24, satisfaction: 98 };
+    const duration = 2000;
+    const steps = 60;
+    const stepDuration = duration / steps;
+
+    const animateNumber = (key: keyof typeof targets, target: number) => {
+      let current = 0;
+      const increment = target / steps;
+      
+      const timer = setInterval(() => {
+        current += increment;
+        if (current >= target) {
+          current = target;
+          clearInterval(timer);
+        }
+        setAnimatedStats(prev => ({ ...prev, [key]: Math.floor(current) }));
+      }, stepDuration);
+    };
+
+    setTimeout(() => animateNumber('partnerships', targets.partnerships), 400);
+    setTimeout(() => animateNumber('responses', targets.responses), 600);
+    setTimeout(() => animateNumber('satisfaction', targets.satisfaction), 800);
+  }, []);
 
   const contactMethods = [
     {
@@ -94,31 +132,114 @@ const Connect = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 pt-16 relative">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 relative overflow-hidden">
+      {/* Enhanced Background Effects */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute inset-0 bg-gradient-to-br from-magenta/10 via-teal/5 to-cta/10 animate-pulse" style={{ animationDuration: '8s' }}></div>
+          <div className="absolute inset-0 bg-gradient-to-tl from-black/70 via-gray-900/50 to-black/80" />
+        </div>
+        
+        {/* Dynamic Glow Effects */}
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-magenta/30 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute top-3/4 right-1/4 w-80 h-80 bg-teal/25 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-72 h-72 bg-cta/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '4s' }}></div>
+        
+        {/* Moving Orbs */}
+        <div className="absolute top-1/3 right-1/3 w-24 h-24 bg-magenta/40 rounded-full blur-xl animate-float-gentle"></div>
+        <div className="absolute bottom-1/3 left-1/3 w-32 h-32 bg-teal/30 rounded-full blur-xl animate-float-gentle" style={{ animationDelay: '1.5s' }}></div>
+      </div>
+
       {/* Particle System Background */}
       <ParticleSystem 
-        particleCount={30} 
+        particleCount={40} 
         colors={['#e91e63', '#00bcd4', '#ff9800', '#4caf50']}
         mouseInteraction={true}
       />
-      {/* Hero Section */}
-      <section className="py-20 relative overflow-hidden">
+      
+      {/* Enhanced Hero Section */}
+      <section className="min-h-screen flex items-center justify-center py-20 relative overflow-hidden z-10">
         <div className="container mx-auto px-6">
-          <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 text-shimmer">
+          <div className="max-w-6xl mx-auto text-center">
+            <h1 
+              className="font-bold text-white mb-8 text-shimmer transition-all duration-500 leading-none"
+              style={{
+                fontSize: Math.max(60, 130 - scrollY * 0.15) + 'px',
+                lineHeight: 1.1
+              }}
+            >
               Connect
             </h1>
-            <p className="text-xl md:text-2xl text-white/80 leading-relaxed text-morphing">
+            
+            <div className="mb-8">
+              <h2 className="text-2xl md:text-4xl font-semibold text-teal mb-6">
+                Let's Build Something Extraordinary
+              </h2>
+            </div>
+            
+            <p 
+              className="text-white/90 leading-relaxed max-w-4xl mx-auto transition-all duration-500 mb-12 text-morphing"
+              style={{
+                fontSize: Math.max(18, 28 - scrollY * 0.05) + 'px'
+              }}
+            >
               Join our mission to connect cultures, empower youth, and create lasting impact across 70+ countries.
             </p>
+            
+            {/* Hero Stats */}
+            <div className="flex justify-center gap-12 mb-16">
+              <div className="text-center">
+                <div className="text-4xl md:text-5xl font-bold text-white mb-2 text-glow">
+                  {animatedStats.partnerships}+
+                </div>
+                <div className="text-white/70 text-sm font-medium">Active Partners</div>
+              </div>
+              <div className="text-center">
+                <div className="text-4xl md:text-5xl font-bold text-white mb-2 text-glow">
+                  {animatedStats.responses}h
+                </div>
+                <div className="text-white/70 text-sm font-medium">Response Time</div>
+              </div>
+              <div className="text-center">
+                <div className="text-4xl md:text-5xl font-bold text-white mb-2 text-glow">
+                  {animatedStats.satisfaction}%
+                </div>
+                <div className="text-white/70 text-sm font-medium">Satisfaction</div>
+              </div>
+            </div>
+
+            {/* Glassmorphism Value Proposition Card */}
+            <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl p-8 max-w-3xl mx-auto shadow-2xl">
+              <div className="flex items-center gap-3 mb-4 justify-center">
+                <Globe className="w-6 h-6 text-magenta" />
+                <h3 className="text-xl font-semibold text-white">Why Partner With MAPS?</h3>
+              </div>
+              <p className="text-white/90 text-lg leading-relaxed mb-6">
+                We're not just another cultural organization. We're architects of meaningful change, connecting diverse communities through the universal language of art and innovation.
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+                <div className="p-4">
+                  <div className="text-2xl font-bold text-magenta mb-1">11+</div>
+                  <div className="text-white/70 text-sm">Years Experience</div>
+                </div>
+                <div className="p-4">
+                  <div className="text-2xl font-bold text-teal mb-1">70+</div>
+                  <div className="text-white/70 text-sm">Countries Reached</div>
+                </div>
+                <div className="p-4">
+                  <div className="text-2xl font-bold text-cta mb-1">500+</div>
+                  <div className="text-white/70 text-sm">Artists Featured</div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         
-        {/* Floating particles background */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-magenta/20 rounded-full animate-float-gentle"></div>
-          <div className="absolute top-3/4 right-1/4 w-3 h-3 bg-teal/20 rounded-full animate-float-gentle" style={{ animationDelay: '1s' }}></div>
-          <div className="absolute top-1/2 right-1/3 w-1 h-1 bg-cta/30 rounded-full animate-float-gentle" style={{ animationDelay: '2s' }}></div>
+        {/* Scroll Indicator */}
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-float">
+          <div className="w-6 h-10 border-2 border-white/30 rounded-full flex flex-col items-center justify-start pt-2">
+            <div className="w-1 h-3 bg-white/60 rounded-full animate-pulse" />
+          </div>
         </div>
       </section>
 
